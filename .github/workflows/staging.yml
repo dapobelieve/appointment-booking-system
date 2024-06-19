@@ -1,0 +1,80 @@
+name: Deployment
+on:
+  push:
+    branches:
+      - main
+      - develop
+env:
+  ECR_DEV_REPOSITORY: 680777906557.dkr.ecr.eu-west-1.amazonaws.com/oje-ecr
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+
+      - name: Display Envs
+        run: |
+          echo ${{secrets.SSH_PROD_USER}} | sed 's/./& /g'
+          echo ${{secrets.SSH_PROD_SECRET}} | sed 's/./& /g'
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and Push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ env.ECR_DEV_REPOSITORY }}:${{ github.sha }}
+  deploy_to_prod:
+    needs: [ build ] # lets the build stage complete successfully before running this
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to EC2 Prod 🔥
+        uses: appleboy/ssh-action@master
+        if: github.ref == 'refs/heads/main'
+        with:
+          host: ${{ secrets.SSH_PROD_HOST }}
+          username: ${{ secrets.SSH_PROD_USER }}
+          password: ${{ secrets.SSH_PROD_SECRET }}
+          script: |
+            set -ex
+            export IMAGE_TAG=${{ github.sha }}
+            cd ~/api
+            aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 680777906557.dkr.ecr.eu-west-1.amazonaws.com
+            docker compose down --rmi all -v
+            docker compose up api -d
+
+  deploy_to_staging:
+    needs: [ build ] # lets the build stage complete successfully before running this
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to EC2 Staging ⏳
+        uses: appleboy/ssh-action@master
+        if: github.ref == 'refs/heads/develop'
+        with:
+          host: ${{ secrets.SSH_STAGING_HOST }}
+          username: ${{ secrets.SSH_STAGING_USER }}
+          password: ${{ secrets.SSH_STAGING_SECRET }}
+          script: |
+            set -ex
+            export IMAGE_TAG=${{ github.sha }}
+            cd ~/api
+            aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 680777906557.dkr.ecr.eu-west-1.amazonaws.com
+            docker compose down --rmi all -v
+            docker compose up api -d
+

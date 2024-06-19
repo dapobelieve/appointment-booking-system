@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <link rel='preconnect' href='https://fonts.googleapis.com'>
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+  <link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap' rel='stylesheet'>
+  <title>Base Layout</title>
+  <style>
+    html,
+    body {
+      min-height: 100%;
+      padding: 0;
+      margin: 0;
+      color: #000;
+      font-family: 'Mulish', sans-serif;
+    }
+
+    a {
+      text-decoration: none;
+      font-weight: normal;
+    }
+
+    h3 {
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 25px;
+      letter-spacing: 0.01em;
+      color: #000000;
+      margin: 30px 0 0px 0;
+    }
+
+    footer {
+      margin-top: 30px;
+      /* margin-bottom: 35px; */
+    }
+
+    .Container {
+      min-width: 414px;
+      max-width: 480px;
+      width: 100%;
+      background-color: #ffffff;
+      margin: 0 auto;
+      height: 100%;
+      overflow-x: hidden;
+      padding-bottom: 35px;
+      border: 1px solid #eee;
+    }
+
+    .Header_Section {
+      width: 100%;
+    }
+
+    .Header_Container {
+      padding: 26px 15px 0;
+      background: #FDB833;
+      height: 46px;
+    }
+
+    .logo {
+      float: left;
+      height: 27px;
+    }
+
+    .Header_Text {
+      font-size: 14px;
+      line-height: 18px;
+      letter-spacing: 0.01em;
+      color: #000000;
+      font-weight: normal;
+    }
+
+    .Body_Content {
+      line-height: 25px;
+      letter-spacing: 0.01em;
+      color: #000000;
+      white-space: pre-line;
+      font-size: 15px;
+    }
+
+    .Footer_Content {
+      font-size: 14px;
+      line-height: 19.53px;
+    }
+
+    .SVG_Wrapper {
+      width: 100%;
+      min-width: 414px;
+      height: 176px;
+      background-color: #123D64;
+    }
+
+    .Content_Wrapper {
+      margin-right: 24px;
+      margin-left: 24px;
+    }
+
+    .Icon_Container {
+      margin-right: 12px;
+    }
+
+    .ReservedLabel {
+      margin-top: 35px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.49;
+      color: #27262D;
+    }
+
+    .Store_Container {
+      margin-top: 15px;
+    }
+
+    table {
+      width: 100%;
+      border: 0px;
+    }
+
+    .TH {
+      width: 100%;
+      white-space: nowrap;
+      border: 0px;
+      padding: 0px 0px;
+    }
+
+    .Social_Media_Table {
+      border: 0px;
+      width: 0px;
+    }
+
+    tr,
+    .SM_TH {
+      border: 0px;
+      padding: 0px 0px;
+      margin: 0px 0px;
+      width: 0px;
+    }
+
+    .Storetable {
+      border: 0px;
+      width: 0px;
+    }
+
+    .Footer_Action {
+      width: 80%;
+      margin: 32px auto 0;
+    }
+
+    .Footer_Action td {
+      text-align: center;
+      color: #2A3DE5;
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    .otp-section {
+      background-color: #f2f2f2; /* light grey background */
+      padding: 87px 40px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      color: #000; /* black text */
+      border-radius: 5px;
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .otp-box {
+      width: 80px; /* width of each box */
+      height: 80px; /* height of each box */
+      background-color: #fff;
+      text-align: center;
+      line-height: 80px;
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .Wrapper {
+      min-height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class='Wrapper'>
+  <div class='Container'>
+    <div class='Header_Section'>
+      <div class='Header_Container'>
+        <table>
+          <thead>
+          <tr>
+            <th class='TH'>
+              <img class='logo'
+                   src='https://d1suw1zy6b0vta.cloudfront.net/oje.png' />
+            </th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+    <div class='Content_Wrapper'>
+      <h3>Hello 👋 {{title}}</h3>
+      <div class='Body_Content'>
+        {{message}}
+
+        <div class="otp-section">
+          <div class="otp-box">{{otp1}}</div>
+          <div class="otp-box">{{otp2}}</div>
+          <div class="otp-box">{{otp3}}</div>
+          <div class="otp-box">{{otp4}}</div>
+        </div>
+
+        Best Regards
+      </div>
+      <div class='ReservedLabel'>© 2023 Ojembaa</div>
+      <div class='Store_Container'>
+        <table class='Storetable'>
+          <tr>
+            <td>
+              <a href='https://play.google.com/store/apps/details?id=com.etapapp'>
+                <img src='https://firebasestorage.googleapis.com/v0/b/etap-d0f52.appspot.com/o/Assets%2FGoogle%20Store.png?alt=media&token=dda380f2-7667-4851-80f7-f8b583206a21' alt='GoogleStoreIMG' />
+              </a>
+            </td>
+            <td>
+              <a href='https://apps.apple.com/ng/app/etap/id1565950437'>
+                <img src='https://firebasestorage.googleapis.com/v0/b/etap-d0f52.appspot.com/o/Assets%2Fimage%202.png?alt=media&token=613bcbd2-8049-4e5a-994e-c2798ce76bf0' alt='AppleStoreIMG' />
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <footer>
+        <table style="display: hidden" class='Footer_Action'>
+        </table>
+      </footer>
+    </div>
+  </div>
+</div>
+</body>
+</html>

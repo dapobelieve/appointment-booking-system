@@ -8,7 +8,7 @@ enum SortOrder {
 
 export class QueryParamsDto {
   @IsOptional()
-  @IsIn(['courier', 'sender', 'admin'])
+  @IsIn(['CUSTOMER', 'MERCHANT', 'ADMIN'])
   role: string;
 
   @IsDateString()
@@ -30,14 +30,6 @@ export class QueryParamsDto {
   @IsString()
   @IsOptional()
   status: string;
-
-  @IsString()
-  @IsOptional()
-  sender: string;
-
-  @IsString()
-  @IsOptional()
-  courier: string;
 
   @IsString()
   @IsOptional()

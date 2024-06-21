@@ -4,10 +4,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class TimeSlot {
@@ -26,8 +29,16 @@ export class TimeSlot {
   @Column()
   endTime: string;
 
-  @Column()
+  @Column({ type: 'enum', enum: ScheduleTimeSlotStatus, default: ScheduleTimeSlotStatus.AVAILABLE })
   status: ScheduleTimeSlotStatus;
+
+  @Index()
+  @Column({ nullable: true })
+  merchantId: string;
+
+  @ManyToOne(() => User, { cascade: false })
+  @JoinColumn({ name: 'merchantId' })
+  merchant: User;
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

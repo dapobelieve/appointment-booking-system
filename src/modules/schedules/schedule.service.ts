@@ -5,16 +5,18 @@ import { ScheduleDefinitionRepository } from './repositories/schedule-definition
 import { User } from '../users/entities/user.entity';
 import { Schedule } from './entities/schedule.entity';
 import { formatDate } from '../common/helpers/date.helper';
-import { addDays, isBefore } from 'date-fns';
+import { addDays, format, isBefore } from 'date-fns';
 import { ScheduleRepository } from './repositories/schedule.repository';
 import { TimeSlot } from './entities/time-slots.entity';
 import { ScheduleTimeSlotStatus } from './schedule.enums';
+import { UserService } from '../users/services/user.service';
 
 @Injectable()
 export class ScheduleService {
   constructor(
     private readonly scheduleRepo: ScheduleRepository,
     private readonly scheduleDefinitionRepo: ScheduleDefinitionRepository,
+    private readonly userService: UserService,
   ) {}
 
   async createSchedule(merchant: User, data: CreateScheduleDto): Promise<Schedule> {
@@ -44,11 +46,10 @@ export class ScheduleService {
       const timeSlots = await this.generateScheduleTimeSlotsBasedOnScheduleTemplate(
         newSchedule,
         scheduleTemplate,
+        merchant,
       );
 
       await this.scheduleRepo.saveScheduleTimeslots(timeSlots);
-
-      // return this.scheduleRepo.update(newSchedule.id, newSchedule);
 
       return this.scheduleRepo.findOne(newSchedule.id);
     } else {
@@ -59,6 +60,7 @@ export class ScheduleService {
   private async generateScheduleTimeSlotsBasedOnScheduleTemplate(
     schedule: Schedule,
     template: ScheduleDefinition,
+    merchant: User,
   ): Promise<TimeSlot[]> {
     const { startDate, endDate } = schedule;
 
@@ -73,6 +75,7 @@ export class ScheduleService {
         entry.startTime = timeSlot.startTime;
         entry.endTime = timeSlot.endTime;
         entry.schedule = schedule;
+        entry.merchantId = merchant.id;
         entry.status = ScheduleTimeSlotStatus.AVAILABLE;
         entries.push(entry);
       }
@@ -97,6 +100,40 @@ export class ScheduleService {
   async getAllScheduleDefinitions(merchant: User): Promise<ScheduleDefinition[]> {
     return this.scheduleDefinitionRepo.findAllByMerchantId(merchant.id);
   }
+
+  async getMerchantAvailableTimeslots(
+    merchantId: string,
+    date?: Date,
+    time?: string,
+  ): Promise<any> {
+    const merchant = await this.userService.findOne(merchantId);
+    if (!merchant) {
+      throw new NotFoundException('Merchant not found');
+    }
+
+    const timeslots = await this.scheduleRepo.findTimeSlots(
+      merchantId,
+      ScheduleTimeSlotStatus.AVAILABLE,
+      date,
+    );
+    return this.groupByDate(timeslots);
+  }
+
+  private groupByDate = (records) => {
+    const grouped = records.reduce((acc, record) => {
+      const date = format(new Date(record.date), 'yyyy-MM-dd');
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(record);
+      return acc;
+    }, {});
+
+    return Object.keys(grouped).map((date) => ({
+      date,
+      timeSlots: grouped[date],
+    }));
+  };
 
   private async getMerchantScheduleDefinition(id: number, merchantId: string) {
     const scheduleDefinition = await this.scheduleDefinitionRepo.findOne(id);

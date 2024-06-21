@@ -4,6 +4,9 @@ import { DataSource, Repository } from 'typeorm';
 import { Schedule } from '../entities/schedule.entity';
 import { TimeSlot } from '../entities/time-slots.entity';
 import { ScheduleDefinition } from '../entities/schedule-definitions.entity';
+import { ScheduleTimeSlotStatus } from '../schedule.enums';
+
+interface AvailableTimeslot {}
 
 @Injectable()
 export class ScheduleRepository {
@@ -30,6 +33,25 @@ export class ScheduleRepository {
 
   async findOne(id: number): Promise<Schedule | null> {
     return this._schedule.findOne({ where: { id, deletedAt: null }, relations: ['timeslots'] });
+  }
+
+  async findTimeSlots(
+    merchantId: string,
+    status: ScheduleTimeSlotStatus,
+    date?: Date,
+  ): Promise<any> {
+    const _query = this._timeslot
+      .createQueryBuilder('slots')
+      .select('slots')
+      .where('slots.merchantId = :merchantId', { merchantId })
+      .andWhere('slots.status = :status', { status })
+      .orderBy('slots.date', 'ASC');
+
+    if (date) {
+      _query.andWhere('DATE(slots.date) = :date', { date });
+    }
+
+    return _query.getMany();
   }
 
   async update(id: number, updateData: Partial<Schedule>): Promise<Schedule> {

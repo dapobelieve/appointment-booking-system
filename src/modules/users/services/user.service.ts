@@ -10,7 +10,12 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async findOne(id: string): Promise<User> {
-    return this.userRepository.findOneBy({ id });
+    try {
+      const user = await this.userRepository.findOneBy({ id });
+      return user;
+    } catch (e) {
+      throw new Error('User not found');
+    }
   }
 
   async me(id: string): Promise<any> {
@@ -22,6 +27,10 @@ export class UserService {
     return {
       ...user,
     };
+  }
+
+  async getAllUsers(query: QueryParamsDto): Promise<PaginatedRecordsDto<User> | null> {
+    return this.userRepository.findAll(query);
   }
 
   async update(userId: string, data: UpdateUserDto) {

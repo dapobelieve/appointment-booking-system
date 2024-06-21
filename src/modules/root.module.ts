@@ -13,6 +13,8 @@ import { UserModule } from './users/user.module';
 import { AssetsModule } from './assets/assets.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from './schedules/schedule.module';
+import { CustomerModule } from './customers/customer.module';
+import { MerchantModule } from './merchants/merchant.module';
 // import { AdminModule } from './admin/admin.module';
 @Module({
   imports: [
@@ -40,6 +42,8 @@ import { ScheduleModule } from './schedules/schedule.module';
     UserModule,
     AssetsModule,
     ScheduleModule,
+    MerchantModule,
+    CustomerModule,
     // AdminModule,
   ],
   controllers: [],

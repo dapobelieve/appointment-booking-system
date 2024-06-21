@@ -5,6 +5,8 @@ services:
     build:
       context: .
     container_name: api
+    depends_on:
+      - postgres
     ports:
       - '8000:8000'
     env_file:
@@ -13,33 +15,24 @@ services:
 #      - .:/usr/src/app
       - /usr/src/app/node_modules
 
-#  postgres:
-#    restart: always
-#    image: postgres:12-alpine
-#    container_name: api-db
-#    environment:
-#      - POSTGRES_USER=root
-#      - POSTGRES_PASSWORD=toor
-#      - POSTGRES_DB=eva
-#    ports:
-#      - 5433:5432
-#    volumes:
-#      - ./scripts/db:/scripts
-#      - ./dockerDB/api:/var/lib/postgresql/data
-#    healthcheck:
-#      test: [ "CMD-SHELL", "pg_isready" ]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 5
-#  docker run --name my-redis-container -d -p 6379:6379 --restart unless-stopped redis --requirepass "mysecretpassword"
-
-
-  redis:
-    image: redis:alpine
-    command: redis-server --requirepass mysecretpassword
-    restart: unless-stopped
+  postgres:
+    restart: always
+    image: postgres:12-alpine
+    container_name: api-db
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=toor
+      - POSTGRES_DB=bb
     ports:
-      - "6379:6379"
+      - 5433:5432
+    volumes:
+      - ./scripts/db:/scripts
+      - ./dockerDB/api:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 
 

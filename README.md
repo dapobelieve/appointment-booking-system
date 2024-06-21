@@ -22,4 +22,12 @@ This API provides the implementation for businesses to implement an Appointment 
 
 * **Docker🛳️ **: the project is also dockerized for production standard. run `docker compose up api` to start the server.
 
-* Auto Deployment: a scalable CI/CD process workflow was also added for automatic deployments to an AWS EC2 instance using github actions and some bash scripting. This can deploy to different environments depending on the branch being merged or pushed to.
+* **Deployment**: a scalable CI/CD process workflow was also added for automatic deployments to an AWS EC2 instance using github actions and some bash scripting. This can deploy to different environments depending on the branch being merged or pushed to.
+
+
+### Documentation
+[https://documenter.getpostman.com/view/23556964/2sA3XWbHqq](https://documenter.getpostman.com/view/23556964/2sA3XWbHqq)
+
+### Deployment URL
+[https://butler-test.dapo.dev/](https://butler-test.dapo.dev/api)
+

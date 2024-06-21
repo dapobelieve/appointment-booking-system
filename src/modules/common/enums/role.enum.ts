@@ -11,3 +11,15 @@ export enum UserStatus {
   INACTIVE = 'inactive',
   ACTIVE = 'active',
 }
+
+/**
+ * The different tags used in grouping the API endpoints in the swagger documentation
+ */
+export enum SwaggerApiTagsEnum {
+  DEFAULT = 'Default',
+  MERCHANTS = 'MERCHANTS',
+  CUSTOMERS = 'CUSTOMERS',
+  SCHEDULE_TEMPLATE = 'SCHEDULE TEMPLATE',
+  SCHEDULE = 'SCHEDULE',
+  APPOINTMENTS = 'APPOINTMENTS',
+}

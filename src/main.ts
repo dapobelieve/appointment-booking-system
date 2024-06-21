@@ -17,7 +17,7 @@ async function bootstrap() {
     operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
   };
   const config = new DocumentBuilder()
-    .setTitle('Ojembaa Api')
+    .setTitle('Beauty Butler Api')
     .setDescription('Api description')
     .setVersion('1.0')
     .build();

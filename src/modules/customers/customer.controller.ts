@@ -3,16 +3,18 @@ import { AppointmentsService } from '../appointments/appointements.service';
 import { Auth } from '../iam/authentication/decorators/auth.decorator';
 import { AuthType } from '../iam/authentication/enums/auth-type.enums';
 import { Roles } from '../iam/authorization/decorators/role.decorator';
-import { UserRole } from '../common/enums/role.enum';
+import { SwaggerApiTagsEnum, UserRole } from '../common/enums/role.enum';
 import { ActiveUser } from '../iam/decorators/active-user.decorator';
 import { User } from '../users/entities/user.entity';
 import { UserService } from '../users/services/user.service';
 import { PaginatedRecordsDto, QueryParamsDto } from '../common/dtos/pagination.dto';
 import { ScheduleService } from '../schedules/schedule.service';
 import { CreateBookingDto } from '../appointments/appointment.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Auth(AuthType.Bearer)
 @Roles(UserRole.CUSTOMER)
+@ApiTags(SwaggerApiTagsEnum.CUSTOMERS)
 @Controller('v1/customers')
 export class CustomerController {
   constructor(

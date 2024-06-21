@@ -100,19 +100,6 @@ export class AuthService {
       throw new UnauthorizedException('Invalid Password');
     }
 
-    // if (user.role !== signinDto.platform) {
-    //   throw new BadRequestException(`Roles don't match, check if you have the right app`);
-    // }
-
-    // if (user.role === UserRole.COURIER) {
-    //   console.log('emitting event');
-    //   await this.txnService.createWallet({ id: user.id });
-    // }
-    //
-    // if (user.role === UserRole.COURIER && !user.otpVerified) {
-    //   throw new BadRequestException('User account not verified');
-    // }
-
     return await this.generateTokens(user);
   }
 
@@ -180,40 +167,4 @@ export class AuthService {
       },
     );
   }
-
-  async resetPassword(data: ResetPassword) {
-    const { email } = data;
-    const user = await this.userRepository.findOneBy({ email });
-
-    // if (user) {
-    //   await this.sendOTP(user, 'otp', 'Use the OTP to reset your password', 'Reset Password OTP');
-    // }
-
-    return { message: 'password reset mail sent' };
-  }
-
-  // async updatePassword(data: UpdatePassword) {
-  //   const { otp: inputOtp, password } = data;
-  //
-  //   const user = await this.userRepository.findOneBy({ otp: inputOtp });
-  //
-  //   const { otpExpiry, id } = user;
-  //   if (!user) {
-  //     throw new BadRequestException('Invalid OTP');
-  //   }
-  //
-  //   if (differenceInMinutes(new Date(), new Date(otpExpiry)) < 0) {
-  //     await this.userRepository.update(id, {
-  //       otp: null,
-  //       otpExpiry: null,
-  //       password: await this.hashingService.hash(data.password),
-  //     });
-  //
-  //     return {
-  //       message: 'Password reset successfully',
-  //     };
-  //   } else {
-  //     throw new BadRequestException('OTP Expired');
-  //   }
-  // }
 }

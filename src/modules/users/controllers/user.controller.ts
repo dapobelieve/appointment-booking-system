@@ -7,13 +7,14 @@ import { ActiveUser } from '../../iam/decorators/active-user.decorator';
 import { UpdateUserDto } from '../../iam/authentication/dtos/auth.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SwaggerApiTagsEnum } from '../../common/enums/role.enum';
+import { ApiOkResponse } from '@nestjs/swagger/dist/decorators/api-response.decorator';
 
 @ApiTags(SwaggerApiTagsEnum.AUTHENTICATION)
 @Controller('v1')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @ApiResponse({
+  @ApiOkResponse({
     type: User,
   })
   @Auth(AuthType.Bearer)

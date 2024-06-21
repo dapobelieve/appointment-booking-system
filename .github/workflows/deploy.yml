@@ -70,6 +70,7 @@ jobs:
             export IMAGE_TAG=${{ github.sha }}
             cd ~/api
             aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 905418022303.dkr.ecr.eu-west-1.amazonaws.com
-            docker compose down --rmi all -v
+            docker compose kill api
+            docker rmi $(docker images --format "{{.ID}}" | tail -n +2)
             docker compose up api -d
 

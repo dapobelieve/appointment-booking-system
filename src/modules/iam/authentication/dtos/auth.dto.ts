@@ -10,11 +10,14 @@ import {
   Matches,
   MinLength,
 } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CommonFields {
+  @ApiProperty()
   @IsEmail()
   email: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   @MinLength(8)
@@ -22,9 +25,11 @@ export class CommonFields {
 }
 
 export class SignIn {
+  @ApiProperty()
   @IsEmail()
   email: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   password: string;
@@ -36,6 +41,7 @@ export class SignIn {
 }
 
 export class SignupDto extends CommonFields {
+  @ApiProperty()
   @IsString()
   name: string;
 }

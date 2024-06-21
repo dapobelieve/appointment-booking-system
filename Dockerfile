@@ -7,8 +7,7 @@ RUN apk add --no-cache bash make gcc g++ python3
 COPY package*.json ./
 
 RUN npm install --verbose && \
-    npm rebuild bcrypt --verbose && \
-    apk del make gcc g++ python3
+    npm rebuild bcrypt --verbose
 
 COPY . .
 

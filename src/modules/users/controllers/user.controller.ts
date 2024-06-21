@@ -5,7 +5,7 @@ import { AuthType } from '../../iam/authentication/enums/auth-type.enums';
 import { Auth } from '../../iam/authentication/decorators/auth.decorator';
 import { ActiveUser } from '../../iam/decorators/active-user.decorator';
 import { UpdateUserDto } from '../../iam/authentication/dtos/auth.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SwaggerApiTagsEnum } from '../../common/enums/role.enum';
 
 @ApiTags(SwaggerApiTagsEnum.AUTHENTICATION)
@@ -13,6 +13,9 @@ import { SwaggerApiTagsEnum } from '../../common/enums/role.enum';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @ApiResponse({
+    type: User,
+  })
   @Auth(AuthType.Bearer)
   @Get('me')
   async me(@ActiveUser('id') authUserId: any): Promise<Partial<User>> {

@@ -30,10 +30,4 @@ export class AuthController {
   async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
     return this.authService.refreshToken(refreshTokenDto);
   }
-
-  @HttpCode(HttpStatus.OK)
-  @Post('auth/reset-password')
-  async resetPassword(@Body() data: ResetPassword) {
-    return this.authService.resetPassword(data);
-  }
 }

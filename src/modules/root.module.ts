@@ -40,7 +40,7 @@ import { MerchantModule } from './merchants/merchant.module';
     CommonModule,
     IamModule,
     UserModule,
-    AssetsModule,
+    // AssetsModule,
     ScheduleModule,
     MerchantModule,
     CustomerModule,

@@ -6,11 +6,8 @@ RUN apk add --no-cache bash make gcc g++ python3
 
 COPY package*.json ./
 
-RUN npm install
-
-RUN npm rebuild bcrypt
-
-RUN apk del make gcc g++ python3
+RUN npm install --verbose && \
+    npm rebuild bcrypt --verbose
 
 COPY . .
 
@@ -22,13 +19,15 @@ WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/package*.json ./
+COPY --from=builder /usr/src/app/npm-lock.yaml* ./
 COPY --from=builder /usr/src/app/src ./src
-COPY --from=builder /usr/src/app/scripts/start.sh ./start.sh
 
+COPY --from=builder /usr/src/app/scripts/start.sh ./start.sh
 RUN chmod +x ./start.sh
 
-RUN npm install --production
+RUN npm install -g npm && \
+    npm install --production
 
-EXPOSE 3030
+EXPOSE 5000
 
 ENTRYPOINT ["./start.sh"]

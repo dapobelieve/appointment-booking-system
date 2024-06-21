@@ -18,6 +18,7 @@ export enum UserStatus {
 export enum SwaggerApiTagsEnum {
   DEFAULT = 'Default',
   MERCHANTS = 'MERCHANTS',
+  AUTHENTICATION = 'AUTHENTICATION',
   CUSTOMERS = 'CUSTOMERS',
   SCHEDULE_TEMPLATE = 'SCHEDULE TEMPLATE',
   SCHEDULE = 'SCHEDULE',

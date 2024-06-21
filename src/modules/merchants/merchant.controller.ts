@@ -9,10 +9,11 @@ import { ScheduleDefinition } from '../schedules/entities/schedule-definitions.e
 import { Auth } from '../iam/authentication/decorators/auth.decorator';
 import { AuthType } from '../iam/authentication/enums/auth-type.enums';
 import { Roles } from '../iam/authorization/decorators/role.decorator';
-import { UserRole } from '../common/enums/role.enum';
+import { SwaggerApiTagsEnum, UserRole } from '../common/enums/role.enum';
 import { PaginatedRecordsDto, QueryParamsDto } from '../common/dtos/pagination.dto';
 import { Appointment } from '../appointments/entities/appointment.entity';
 import { UpdateAppointementStatusDto } from '../appointments/appointment.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 /**
  * Merchant Controller
@@ -21,6 +22,7 @@ import { UpdateAppointementStatusDto } from '../appointments/appointment.dto';
  */
 @Auth(AuthType.Bearer)
 @Roles(UserRole.MERCHANT)
+@ApiTags(SwaggerApiTagsEnum.MERCHANTS)
 @Controller('v1/merchants')
 export class MerchantController {
   constructor(
@@ -51,6 +53,7 @@ export class MerchantController {
    * Retrieves all schedule definitions for the merchant
    *
    * @param merchant The active merchant
+   * @Body
    */
   @Get('schedule-templates')
   async getAllSchdeuleDefinitions(

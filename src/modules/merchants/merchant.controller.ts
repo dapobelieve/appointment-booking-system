@@ -86,6 +86,7 @@ export class MerchantController {
    * @param merchant The active merchant
    * @param query The query parameters
    */
+
   @Get('appointments')
   async getAllAppointments(
     @ActiveUser() merchant: User,

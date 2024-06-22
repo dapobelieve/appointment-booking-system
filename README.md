@@ -20,7 +20,8 @@ This API provides the implementation for businesses to implement an Appointment 
 
 * **Logging⏺️**:  async logging of all requests and responses
 
-* **Docker🛳️ **: the project is also dockerized for production standard. run `docker compose up api` to start the server.
+* **Docker🛳️ **: the project is also dockerized for production standard. To run locally, ensure you have docker and docker compose installed then run 
+`docker compose up api` to start the server and all other related processes like the postgres db.
 
 * **Deployment**: a scalable CI/CD process workflow was also added for automatic deployments to an AWS EC2 instance using github actions and some bash scripting. This can deploy to different environments depending on the branch being merged or pushed to.
 

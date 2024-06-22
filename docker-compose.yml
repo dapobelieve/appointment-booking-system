@@ -5,6 +5,7 @@ services:
     build:
       context: .
     container_name: api
+    platform: 'linux/amd64/v2'
     depends_on:
       - postgres
     ports:

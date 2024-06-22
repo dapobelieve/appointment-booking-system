@@ -8,6 +8,8 @@ import {
   ResetPassword,
 } from '../../src/modules/iam/authentication/dtos/auth.dto';
 import { RefreshTokenDto } from '../../src/modules/iam/authentication/dtos/refresh-token.dto';
+import { HashingService } from '../../src/modules/iam/authentication/services/hashing.service';
+import { BcryptService } from '../../src/modules/iam/authentication/services/bcrypt.service';
 
 describe('AuthController', () => {
   let authController: AuthController;
@@ -25,6 +27,10 @@ describe('AuthController', () => {
             refreshToken: jest.fn(),
             resetPassword: jest.fn(),
           },
+        },
+        {
+          provide: HashingService,
+          useClass: BcryptService,
         },
       ],
     }).compile();

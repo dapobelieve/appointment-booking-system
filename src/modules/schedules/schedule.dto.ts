@@ -20,6 +20,7 @@ import {
 } from './decorators/start-end-date.decorator';
 import { format, parse } from 'date-fns';
 import { Transform, Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 class TimeSlotDTO {
   @IsNotEmpty({ message: 'startTime is required' })
@@ -37,6 +38,7 @@ class TimeSlotDTO {
 }
 
 export class CreateScheduleDefinitionDTO {
+  @ApiProperty()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => TimeSlotDTO)
@@ -48,12 +50,15 @@ export class CreateScheduleDefinitionDTO {
 }
 
 export class CreateScheduleDto {
+  @ApiProperty()
   @IsDate()
   startDate: Date;
 
+  @ApiProperty()
   @IsDate()
   endDate: Date;
 
+  @ApiProperty()
   @IsNotEmpty()
   templateId: number;
 }

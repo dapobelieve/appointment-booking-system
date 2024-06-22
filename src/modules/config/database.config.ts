@@ -17,7 +17,7 @@ const DatabaseConfig =
         host: process.env.TYPEORM_HOST,
         username: process.env.TYPEORM_USERNAME,
         password: process.env.TYPEORM_PASSWORD,
-        port: 5432,
+        port: process.env.DB_PORT,
         database: process.env.TYPEORM_DATABASE,
         synchronize: false,
         entities: ['dist/modules/**/*.entity.{ts,js}'],

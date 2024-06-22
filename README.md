@@ -25,6 +25,10 @@ This API provides the implementation for businesses to implement an Appointment 
 
 * **Deployment**: a scalable CI/CD process workflow was also added for automatic deployments to an AWS EC2 instance using github actions and some bash scripting. This can deploy to different environments depending on the branch being merged or pushed to.
 
+### Testing
+
+Run `npm run test`
+
 
 ### Documentation
 [https://documenter.getpostman.com/view/23556964/2sA3XWbHqq](https://documenter.getpostman.com/view/23556964/2sA3XWbHqq)

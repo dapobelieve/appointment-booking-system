@@ -1,4 +1,3 @@
-import Joi from 'joi';
 import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CommonModule } from './common/common.module';
@@ -10,12 +9,11 @@ import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { AppInterceptor } from './common/interceptors/app.interceptor';
 import { UserModule } from './users/user.module';
-import { AssetsModule } from './assets/assets.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from './schedules/schedule.module';
 import { CustomerModule } from './customers/customer.module';
 import { MerchantModule } from './merchants/merchant.module';
-// import { AdminModule } from './admin/admin.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -40,11 +38,9 @@ import { MerchantModule } from './merchants/merchant.module';
     CommonModule,
     IamModule,
     UserModule,
-    // AssetsModule,
     ScheduleModule,
     MerchantModule,
     CustomerModule,
-    // AdminModule,
   ],
   controllers: [],
   providers: [

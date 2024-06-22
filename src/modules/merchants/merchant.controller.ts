@@ -26,7 +26,6 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('v1/merchants')
 export class MerchantController {
   constructor(
-    private readonly userService: UserService,
     private readonly appointmentService: AppointmentsService,
     private readonly scheduleService: ScheduleService,
   ) {}

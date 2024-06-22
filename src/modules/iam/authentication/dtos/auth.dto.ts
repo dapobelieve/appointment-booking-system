@@ -22,6 +22,10 @@ export class CommonFields {
   @IsString()
   @MinLength(8)
   password: string;
+
+  @ApiProperty()
+  @IsOptional()
+  type?: 'merchant';
 }
 
 export class SignIn {

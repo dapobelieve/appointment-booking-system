@@ -7,6 +7,8 @@ import { AuthType } from './enums/auth-type.enums';
 import { RefreshTokenDto } from './dtos/refresh-token.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { SwaggerApiTagsEnum } from '../../common/enums/role.enum';
+import { ApiOkResponse } from '@nestjs/swagger/dist/decorators/api-response.decorator';
+import { User } from '../../users/entities/user.entity';
 
 @Auth(AuthType.None)
 @ApiTags(SwaggerApiTagsEnum.AUTHENTICATION)
@@ -14,6 +16,9 @@ import { SwaggerApiTagsEnum } from '../../common/enums/role.enum';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiOkResponse({
+    type: User,
+  })
   @Post('auth/sign-up')
   async signup(@Body() signupDto: SignupDto) {
     return this.authService.signUp(signupDto);
@@ -21,7 +26,7 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('auth/sign-in')
-  async signIn(@Res({ passthrough: true }) response: Response, @Body() signInDto: SignIn) {
+  async signIn(@Body() signInDto: SignIn) {
     return await this.authService.signIn(signInDto);
   }
 

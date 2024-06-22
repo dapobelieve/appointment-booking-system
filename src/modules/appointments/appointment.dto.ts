@@ -2,6 +2,7 @@ import { IsDate, IsEnum, IsNotEmpty, IsNumber, IsUUID, Matches } from 'class-val
 import { Transform } from 'class-transformer';
 import { format, parse } from 'date-fns';
 import { AppointmentStatuses } from './appointment.enums';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBookingDto {
   @IsUUID()
@@ -18,6 +19,10 @@ export class CreateBookingDto {
 }
 
 export class UpdateAppointementStatusDto {
+  @ApiProperty({
+    name: 'status',
+    enum: [...Object.values(AppointmentStatuses).join(', ')],
+  })
   @IsEnum(AppointmentStatuses)
   status: AppointmentStatuses;
 }
